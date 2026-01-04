@@ -82,3 +82,33 @@ Contributions are welcome! If you have ideas for better data sources or algorith
 ## 📄 License
 
 This project is open-source and available under the MIT License.
+## 🖥️ Sample Output
+
+The following is a demonstration of the CineBot interaction flow, featuring the mixed-genre logic and the ranked results provided by the Heap algorithm.
+
+```text
+🤖 Hello! I am your Movie Recommendation Bot 🎬
+I can suggest movies based on genre and language.
+Type 'exit' to quit anytime.
+
+📌 NOTE:
+Some regional movies may be missing due to
+limited metadata in public movie APIs.
+
+👤 Enter genre(s) (e.g. horror-romance) or 'exit': horror-comedy
+👤 Enter language (press Enter for English): 
+
+🔍 Let me find some movies for you...
+
+🏆 Here are my recommendations:
+
+1. Shaun of the Dead (2004) ⭐ 7.9
+2. What We Do in the Shadows (2014) ⭐ 7.8
+3. Tucker & Dale vs. Evil (2010) ⭐ 7.5
+4. Evil Dead II (1987) ⭐ 7.7
+5. The Cabin in the Woods (2011) ⭐ 7.0
+
+🎯 Want more recommendations? Just ask!
+
+👤 Enter genre(s) (e.g. horror-romance) or 'exit': exit
+👋 Goodbye! Happy watching 🍿
