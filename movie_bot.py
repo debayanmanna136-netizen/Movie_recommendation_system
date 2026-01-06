@@ -7,14 +7,14 @@ import sys
 # CONFIGURATION
 # =====================================================
 
-API_KEY = "YOUR_API_KEY_HERE"
-API_HOST = "YOUR_API_HOST_HERE"
-BASE_URL = "YOUR_API_BASE_URL_HERE"
+API_KEY = "d9633ac75bmsh62326838ed66d3bp1026a0jsn30873307fc79"
+API_HOST = "advanced-movie-search.p.rapidapi.com"
+BASE_URL = "https://advanced-movie-search.p.rapidapi.com/discover/movie"
 
 TOP_K = 5
 PAGES_TO_FETCH = 5
 
-EXIT_COMMANDS = {"bye", "exit", "quit", "goodbye"}
+EXIT_COMMANDS = {"bye", "exit", "quit", "q"}
 
 # =====================================================
 # GENRE & LANGUAGE MAPS
@@ -123,19 +123,55 @@ def filter_by_original_language(movies, language_code):
     ]
 
 
-def rank_movies_with_heap(movies, k):
+import heapq
+
+def extract_rating(movie):
+    """
+    Extracts rating safely from different possible API fields.
+    Returns float rating or None.
+    """
+
+    # Try common rating fields
+    rating = (
+        movie.get("vote_average") or
+        movie.get("rating") or
+        movie.get("imdbRating")
+    )
+
+    try:
+        rating = float(rating)
+        if rating <= 0:
+            return None
+        return rating
+    except (TypeError, ValueError):
+        return None
+
+
+def rank_movies_with_heap(movies, top_k):
+    """
+    Ranks movies using a max-heap based on rating.
+    Uses index as tie-breaker.
+    """
+
     heap = []
+    index = 0
 
     for movie in movies:
-        rating = movie.get("vote_average", 0)
-        heapq.heappush(heap, (-rating, movie))
+        rating = extract_rating(movie)
+
+        if rating is None:
+            continue
+
+        heapq.heappush(heap, (-rating, index, movie))
+        index += 1
 
     top_movies = []
 
-    for _ in range(min(k, len(heap))):
-        top_movies.append(heapq.heappop(heap)[1])
+    while heap and len(top_movies) < top_k:
+        top_movies.append(heapq.heappop(heap)[2])
 
     return top_movies
+
 
 # =====================================================
 # CHATBOT FLOW
@@ -143,7 +179,7 @@ def rank_movies_with_heap(movies, k):
 
 def chatbot():
     bot_say("\n🤖 Hello! I am your Movie Recommendation Bot 🎬")
-    bot_say("I can suggest movies based on genre and language.\nType 'exit' to quit anytime.\n")
+    bot_say("I can suggest movies based on genre and language. Enter exit to quit anytime.\n")
 
     bot_say(
         "📌 NOTE:\n"
