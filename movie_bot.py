@@ -7,9 +7,9 @@ import sys
 # CONFIGURATION
 # =====================================================
 
-API_KEY = "d9633ac75bmsh62326838ed66d3bp1026a0jsn30873307fc79"
-API_HOST = "advanced-movie-search.p.rapidapi.com"
-BASE_URL = "https://advanced-movie-search.p.rapidapi.com/discover/movie"
+API_KEY = "YOUR_API_KEY_HERE"
+API_HOST = "YOUR_API_HOST_HERE"
+BASE_URL = "YOUR_BASE_URL_HERE"
 
 TOP_K = 5
 PAGES_TO_FETCH = 5
